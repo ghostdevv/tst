@@ -23,9 +23,9 @@ export interface VariableNode extends Node {
 
 export interface FunctionNode extends Node {
     type: 'function';
+    name: string;
     variables: string[];
     expression: string;
-    // evaluate: (variables: Program['variables'], ...args: string[]) => string;
 }
 
 export interface MacroNode extends Node {

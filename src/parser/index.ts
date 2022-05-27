@@ -89,6 +89,7 @@ export class Program {
 
             const fnNode: FunctionNode = {
                 ...node,
+                name,
                 type: 'function',
                 expression,
                 variables,
