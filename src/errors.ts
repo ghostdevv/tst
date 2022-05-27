@@ -23,5 +23,9 @@ export const createErrorManager = (prefix?: string, suffix?: string) => {
             console.error(...$);
             process.exit(1);
         },
+
+        setSuffix: (newSuffix: string) => {
+            suffix = newSuffix;
+        },
     };
 };

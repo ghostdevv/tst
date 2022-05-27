@@ -1,7 +1,9 @@
-sheets require 30 copper pm, need (8 * 30) sheetas
-
 asd
 
-$ x = (1 + 1)
+$ a = test the pog dog
 
-{x}
+{a}
+
+$ x = |v a b| {v} {a}
+
+{x[1 2 3]}

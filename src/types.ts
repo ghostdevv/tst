@@ -21,6 +21,13 @@ export interface VariableNode extends Node {
     value: string;
 }
 
+export interface FunctionNode extends Node {
+    type: 'function';
+    variables: string[];
+    expression: string;
+    // evaluate: (variables: Program['variables'], ...args: string[]) => string;
+}
+
 export interface MacroNode extends Node {
     type: 'macro';
     runner: MacroRunner;
@@ -30,5 +37,11 @@ export interface BlankNode extends Node {
     type: 'blank';
 }
 
-export type Leaf = MacroNode | VariableNode | LineNode | BlankNode;
+export type Leaf =
+    | MacroNode
+    | VariableNode
+    | LineNode
+    | BlankNode
+    | FunctionNode;
+
 export type MacroRunner = (program: Program) => void;
