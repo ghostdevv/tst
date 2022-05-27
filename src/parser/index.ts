@@ -113,7 +113,7 @@ export class Program {
 
     parseMacro(node: UnparsedNode) {
         const em = createErrorManager('Invalid Statement', 'Format: # macro');
-        const [hash, macro] = node.raw.split(' ');
+        const [hash, macro] = node.raw.trim().split(' ');
 
         if (hash !== '#') {
             throw em.fatal('ParseError', `# malformed, found "${hash}".`);
