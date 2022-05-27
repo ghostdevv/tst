@@ -171,7 +171,7 @@ export class Program {
             }
 
             const data = this.functions.get(name);
-            const args = argsString.split(' ');
+            const args = argsString.split(' ').filter(Boolean);
 
             if (data.variables.length != args.length) {
                 throw em.fatal(
