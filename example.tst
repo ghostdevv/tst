@@ -37,3 +37,8 @@ TST Example/Test file
     {add[10 20]}
 
     This will compile to "30"
+
+- Macros
+    tst also includes macros, you can test one by removing the X so it's # clear. This will clear the console
+
+    X# clear
