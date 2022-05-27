@@ -23,7 +23,7 @@ export class Program {
                 raw: line,
             };
 
-            switch (line[0]) {
+            switch (line.trim()[0]) {
                 case '$':
                     this.parseStatement(node);
                     break;
