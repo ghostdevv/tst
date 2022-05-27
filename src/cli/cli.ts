@@ -1,8 +1,8 @@
-import { Program } from './index';
+import { run } from '../compilers/console';
+import { Program } from '../parser';
 import { readFileSync } from 'fs';
 import minimist from 'minimist';
 import { resolve } from 'path';
-import { run } from './run';
 import kleur from 'kleur';
 
 const args = minimist(process.argv.slice(2));

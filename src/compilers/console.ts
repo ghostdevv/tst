@@ -1,4 +1,4 @@
-import type { Program } from './index';
+import type { Program } from '../parser';
 
 export const run = async (program: Program) => {
     for (const node of program.tree) {

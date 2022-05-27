@@ -1,7 +1,7 @@
 import { FunctionNode, Leaf, UnparsedNode } from './types';
 import maths from 'math-expression-evaluator';
 import { createErrorManager } from './errors';
-import * as config from './config';
+import * as config from '../config';
 
 export class Program {
     public tree: Leaf[];
