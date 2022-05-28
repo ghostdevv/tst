@@ -57,10 +57,7 @@ switch (command) {
         const { data } = resolveFileData(inp);
         const path = resolveFile(out);
 
-        const program = new Program();
-        program.add(data);
-
-        await javascriptCompiler.compileToFile(program, path);
+        await javascriptCompiler.compile(data, path);
 
         console.log(`Compiled to ${out}!`);
         break;

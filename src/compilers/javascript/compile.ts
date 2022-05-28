@@ -5,6 +5,7 @@ import { Leaf } from '../../parser/types';
 import { stripExt } from 'ghoststools';
 import { generateLib } from './lib';
 import { writeFileSync } from 'fs';
+import { macros } from './macros';
 
 interface Line {
     type: Leaf['type'];
@@ -38,7 +39,7 @@ const compileProgram = async (program: Program) => {
     const lines: Line[] = [];
 
     for (const node of program.tree) {
-        let line: string;
+        let line: string = '';
 
         switch (node.type) {
             case 'blank':
@@ -49,9 +50,15 @@ const compileProgram = async (program: Program) => {
                 line = `console.log(${parse(node.raw)});`;
                 break;
 
-            case 'macro':
-                line = `(${node.runner})();`;
+            case 'macro': {
+                const result = node.runner(program, node);
+
+                if (result) {
+                    line = typeof result == 'string' ? result : `(${result})()`;
+                }
+
                 break;
+            }
 
             case 'variable':
                 line = `var ${node.name} = ${parse(node.value)};`;
@@ -84,7 +91,19 @@ const compileProgram = async (program: Program) => {
     };
 };
 
-export const compileToFile = async (program: Program, outputPath: string) => {
+const patchProgram = (program: Program) => {
+    for (const [name, runner] of Object.entries(macros)) {
+        program.setMacro(name, runner);
+    }
+
+    return program;
+};
+
+export const compile = async (raw: string, outputPath: string) => {
+    const program = patchProgram(new Program());
+
+    program.add(raw);
+
     const { code } = await compileProgram(program);
     const lib = await generateLib();
 
