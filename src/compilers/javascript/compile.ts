@@ -34,7 +34,7 @@ const parse = (str: string) => {
     return `\`${str}\``;
 };
 
-export const compile = async (program: Program) => {
+const compileProgram = async (program: Program) => {
     const lines: Line[] = [];
 
     for (const node of program.tree) {
@@ -83,7 +83,7 @@ export const compile = async (program: Program) => {
 };
 
 export const compileToFile = async (program: Program, outputPath: string) => {
-    const { code } = await compile(program);
+    const { code } = await compileProgram(program);
     const lib = await generateLib();
 
     const outputFileName = stripExt(basename(outputPath));
