@@ -1,7 +1,7 @@
-import * as javascriptCompiler from '../compilers/javascript';
+import * as javascriptCompiler from '../compilers/javascript/compile';
 import * as consoleCompiler from '../compilers/console';
-import { readFileSync, writeFileSync } from 'fs';
 import { Program } from '../parser/index';
+import { readFileSync } from 'fs';
 import minimist from 'minimist';
 import { resolve } from 'path';
 import kleur from 'kleur';
@@ -58,14 +58,12 @@ switch (command) {
         const path = resolveFile(out);
 
         const program = new Program();
-
         program.add(data);
 
-        const result = javascriptCompiler.compile(program);
+        await javascriptCompiler.compileToFile(program, path);
 
-        writeFileSync(path, result, 'utf-8');
-
-        console.log(`Compiled ${inp} to ${out}`);
+        console.log(`Compiled to ${inp}!`);
+        break;
     }
 
     case 'parse': {
@@ -77,5 +75,6 @@ switch (command) {
         program.add(data);
 
         console.log(program);
+        break;
     }
 }
