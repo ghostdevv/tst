@@ -62,7 +62,7 @@ switch (command) {
 
         await javascriptCompiler.compileToFile(program, path);
 
-        console.log(`Compiled to ${inp}!`);
+        console.log(`Compiled to ${out}!`);
         break;
     }
 
