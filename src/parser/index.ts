@@ -2,6 +2,7 @@ import { FunctionNode, Functions, Leaf, MacroRunner, UnparsedNode, Variables } f
 import { validateFunctionExpression, validateLine } from './validator';
 import { createErrorManager } from './errors';
 import * as config from '../config';
+import { nanoid } from 'nanoid';
 
 export class Program {
     public tree: Leaf[];
@@ -25,6 +26,7 @@ export class Program {
             const node: UnparsedNode = {
                 type: 'raw',
                 raw: line,
+                id: nanoid(),
             };
 
             switch (line.trim()[0]) {

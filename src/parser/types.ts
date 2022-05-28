@@ -3,6 +3,7 @@ import type { Program } from './index';
 export interface Node {
     type: string;
     raw: string;
+    id: string;
 }
 
 export interface UnparsedNode extends Node {
