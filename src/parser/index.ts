@@ -1,4 +1,4 @@
-import { FunctionNode, Functions, Leaf, UnparsedNode, Variables } from './types';
+import { FunctionNode, Functions, Leaf, MacroRunner, UnparsedNode, Variables } from './types';
 import { validateFunctionExpression, validateLine } from './validator';
 import { createErrorManager } from './errors';
 import * as config from '../config';
@@ -7,7 +7,7 @@ export class Program {
     public tree: Leaf[];
     public variables: Variables;
     public functions: Functions;
-    public macros: Map<string, (program: Program) => void>;
+    public macros: Map<string, MacroRunner>;
 
     constructor() {
         this.tree = [];

@@ -38,7 +38,7 @@ export const run = async (program: Program) => {
                 break;
 
             case 'macro':
-                node.runner(program);
+                node.runner(program, node);
                 break;
         }
     }

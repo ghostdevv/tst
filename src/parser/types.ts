@@ -37,7 +37,7 @@ export interface BlankNode extends Node {
 
 export type Leaf = MacroNode | VariableNode | LineNode | BlankNode | FunctionNode;
 
-export type MacroRunner = (program: Program) => void;
+export type MacroRunner = (program: Program, node: Leaf) => void;
 
 export type Variables = Map<string, string>;
 export type Functions = Map<string, FunctionNode>;
