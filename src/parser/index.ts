@@ -1,6 +1,6 @@
 import { FunctionNode, Leaf, UnparsedNode } from './types';
-import maths from 'math-expression-evaluator';
 import { createErrorManager } from './errors';
+import { Evaluator } from './Evaluator';
 import * as config from '../config';
 
 export class Program {
@@ -137,82 +137,6 @@ export class Program {
         });
     }
 
-    evaluateString(str: string, variables = this.variables) {
-        // Match variables
-        str = str.replace(/{([\w\d]+)}/g, (match, variable) => {
-            const em = createErrorManager();
-
-            if (!variables.has(variable)) {
-                throw em.fatal(
-                    'Error',
-                    `Unable to find variable "${variable}"`,
-                );
-            }
-
-            return variables.get(variable);
-        });
-
-        // Match functions
-        str = str.replace(/{[\w\d]+\[([\w\d ]+)\]}/g, (match) => {
-            const em = createErrorManager('', 'Format: {fm[var1 var2 etc]}');
-            const dec = match.trim().slice(1, -2);
-
-            const [name, argsString] = dec.split('[');
-
-            if (!name || !name.length) {
-                throw em.fatal('ParseError', 'Unable to find function name');
-            }
-
-            if (!argsString || !argsString.length) {
-                throw em.fatal('ParseError', 'Unable to find function args');
-            }
-
-            if (!this.functions.has(name)) {
-                throw em.fatal('Error', `Unable to find function "${name}"`);
-            }
-
-            const data = this.functions.get(name);
-            const args = argsString.split(' ').filter(Boolean);
-
-            if (data.variables.length != args.length) {
-                throw em.fatal(
-                    'ParseError',
-                    `Function arguments do not match, requires ${data.variables.length} but found ${args.length}`,
-                );
-            }
-
-            const scopedVariables = new Map(Object.entries(variables));
-
-            for (let i = 0; i < data.variables.length; i++) {
-                scopedVariables.set(data.variables[i], args[i]);
-            }
-
-            const parsed = this.evaluateString(
-                data.expression,
-                scopedVariables,
-            );
-
-            return parsed;
-        });
-
-        // Match maths
-        str = str.replace(/\(([^()])+\)/g, (match) => {
-            const statement = match.slice(0, -1);
-
-            const em = createErrorManager(
-                `Unable to parse maths statement "${statement}",`,
-            );
-
-            try {
-                return maths.eval(statement);
-            } catch (e) {
-                throw em.fatal('ParseError', e?.message);
-            }
-        });
-
-        return str;
-    }
-
     parseLine(node: UnparsedNode) {
         if (node.raw.trim() == '')
             return void this.tree.push({
@@ -220,10 +144,12 @@ export class Program {
                 type: 'blank',
             });
 
+        const evaluator = new Evaluator(this.variables, this.functions);
+
         this.tree.push({
             ...node,
             type: 'line',
-            parsed: this.evaluateString(node.raw),
+            parsed: evaluator.evaluate(node.raw),
         });
     }
 }
