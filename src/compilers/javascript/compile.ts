@@ -25,7 +25,7 @@ const parse = (str: string) => {
     });
 
     str = matchMaths(str, (maths) => {
-        return `\$\{$$eval(\`${maths}\`)\}`;
+        return `\$\{_tst_math_(\`${maths}\`)\}`;
     });
 
     str = matchFunction(str, (name, args) => {
@@ -112,11 +112,11 @@ export const compile = async (raw: string, outputPath?: string) => {
         const libFileName = `${outputFileName}.lib.js`;
 
         const libPath = join(dirname(outputPath), libFileName);
-        const libImport = `import { $$eval } from './${escape(libFileName)}';`;
+        const libImport = `import { _tst_math_ } from './${escape(libFileName)}';`;
 
         writeFileSync(outputPath, `${libImport}\n\n${code}`, 'utf-8');
         writeFileSync(libPath, lib, 'utf-8');
     } else {
-        return `${code};;\n\n<!-- LIB -->\n\n${lib}`;
+        return `${code};;\n\n//<!-- LIB -->\n\n${lib}`;
     }
 };
