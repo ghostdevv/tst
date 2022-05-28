@@ -16,6 +16,10 @@ export class Program {
         this.macros = new Map(Object.entries(config.macros));
     }
 
+    setMacro(name: string, runner: MacroRunner) {
+        this.macros.set(name, runner);
+    }
+
     add(code: string) {
         for (let line of code.split('\n')) {
             const node: UnparsedNode = {
