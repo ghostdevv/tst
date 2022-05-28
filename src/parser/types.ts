@@ -7,12 +7,10 @@ export interface Node {
 
 export interface UnparsedNode extends Node {
     type: 'raw';
-    raw: string;
 }
 
 export interface LineNode extends Node {
     type: 'line';
-    parsed: string;
 }
 
 export interface VariableNode extends Node {
@@ -37,11 +35,9 @@ export interface BlankNode extends Node {
     type: 'blank';
 }
 
-export type Leaf =
-    | MacroNode
-    | VariableNode
-    | LineNode
-    | BlankNode
-    | FunctionNode;
+export type Leaf = MacroNode | VariableNode | LineNode | BlankNode | FunctionNode;
 
 export type MacroRunner = (program: Program) => void;
+
+export type Variables = Map<string, string>;
+export type Functions = Map<string, FunctionNode>;

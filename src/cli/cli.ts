@@ -67,4 +67,15 @@ switch (command) {
 
         console.log(`Compiled ${inp} to ${out}`);
     }
+
+    case 'parse': {
+        const [, inp] = args._;
+
+        const { data } = resolveFileData(inp);
+        const program = new Program();
+
+        program.add(data);
+
+        console.log(program);
+    }
 }

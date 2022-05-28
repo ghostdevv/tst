@@ -1,12 +1,12 @@
-import { FunctionNode, Leaf, UnparsedNode } from './types';
+import { FunctionNode, Functions, Leaf, UnparsedNode, Variables } from './types';
+import { validateFunctionExpression, validateLine } from './validator';
 import { createErrorManager } from './errors';
-import { Evaluator } from './Evaluator';
 import * as config from '../config';
 
 export class Program {
     public tree: Leaf[];
-    public variables: Map<string, string>;
-    public functions: Map<string, FunctionNode>;
+    public variables: Variables;
+    public functions: Functions;
     public macros: Map<string, (program: Program) => void>;
 
     constructor() {
@@ -44,10 +44,7 @@ export class Program {
 
         name = name.trim().replace(/^\$( )?/g, '');
 
-        const em = createErrorManager(
-            'Invalid Statement.',
-            'Format: $ name = value',
-        );
+        const em = createErrorManager('Invalid Statement.', 'Format: $ name = value');
 
         if (!expression || !expression.length) {
             throw em.fatal('ParseError', 'Unable to find a value');
@@ -55,6 +52,10 @@ export class Program {
 
         if (!name || !name.length) {
             throw em.fatal('ParseError', 'Unable to find a name');
+        }
+
+        if (this.variables.has(name) || this.functions.has(name)) {
+            throw em.fatal('Error', `Variable or function "${name}" already exists`);
         }
 
         if (expression.trimStart().startsWith('|')) {
@@ -95,6 +96,8 @@ export class Program {
                 variables,
             };
 
+            validateFunctionExpression(fnNode, this.variables, this.functions);
+
             this.tree.push(fnNode);
             this.functions.set(name, fnNode);
         } else {
@@ -120,10 +123,7 @@ export class Program {
         }
 
         if (!macro || macro.trim() == '') {
-            throw em.fatal(
-                'ParseError',
-                `Macro name malformed, found "${macro}".`,
-            );
+            throw em.fatal('ParseError', `Macro name malformed, found "${macro}".`);
         }
 
         if (!this.macros.has(macro)) {
@@ -144,12 +144,11 @@ export class Program {
                 type: 'blank',
             });
 
-        const evaluator = new Evaluator(this.variables, this.functions);
+        validateLine(node.raw, this.variables, this.functions);
 
         this.tree.push({
             ...node,
             type: 'line',
-            parsed: evaluator.evaluate(node.raw),
         });
     }
 }

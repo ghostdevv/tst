@@ -1,3 +1,4 @@
+import { matchFunction, matchVariable } from '../parser/expressions/matcher';
 import { Program } from '../parser/index';
 import { Leaf } from '../parser/types';
 
@@ -7,10 +8,28 @@ interface Line {
     line: string;
 }
 
-const escape = (str: string) => str.replace(/"/g, '\\"').replace(/'/g, "\\'");
+const escape = (str: string) => {
+    return str.replace(/"/g, '\\"').replace(/'/g, "\\'").replace(/\`/g, '\\`');
+};
+
+const evaluate = (str: string) => {
+    str = matchVariable(str, (variable) => {
+        return `\$\{${variable}\}`;
+    });
+
+    str = matchFunction(str, (name, args) => {
+        return `\$\{${name}(${args.join(', ')})}\}`;
+    });
+
+    return str;
+};
 
 export const compile = (program: Program) => {
     const result: Line[] = [];
+
+    const parse = (expression: string) => {
+        return `\`${evaluate(escape(expression))}\``;
+    };
 
     for (const node of program.tree) {
         let line: string;
@@ -21,7 +40,7 @@ export const compile = (program: Program) => {
                 break;
 
             case 'line':
-                line = `console.log('${escape(node.raw)}')`;
+                line = `console.log(${parse(node.raw)});`;
                 break;
 
             case 'macro':
@@ -29,12 +48,12 @@ export const compile = (program: Program) => {
                 break;
 
             case 'variable':
-                line = `var ${node.name} = '${escape(node.value)}';`;
+                line = `var ${node.name} = ${parse(node.value)};`;
                 break;
 
             case 'function':
                 // prettier-ignore
-                line = `var ${node.name} = (${node.variables.join(', ')}) => '${escape(node.expression)}';`;
+                line = `var ${node.name} = (${node.variables.join(', ')}) => ${parse(node.expression)};`;
                 break;
         }
 
@@ -45,7 +64,5 @@ export const compile = (program: Program) => {
         });
     }
 
-    return result
-        .flatMap((x) => [`// [${x.type}] "${x.source}"`, x.line, ''])
-        .join('\n');
+    return result.flatMap((x) => [`// [${x.type}] "${x.source}"`, x.line, '']).join('\n');
 };
