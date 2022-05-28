@@ -1,7 +1,8 @@
 {
 	"type": "module",
 	"scripts": {
-		"dev": "nodemon test.ts"
+		"dev": "nodemon test.ts",
+		"build": "tsup src -d dist --target esnext --format esm"
 	},
 	"devDependencies": {
 		"@rollup/plugin-commonjs": "^22.0.0",
@@ -18,6 +19,7 @@
 		"nodemon": "^2.0.16",
 		"rollup": "^2.75.1",
 		"tsm": "^2.2.1",
+		"tsup": "^6.0.1",
 		"typescript": "^4.7.2"
 	}
 }
