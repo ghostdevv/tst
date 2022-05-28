@@ -37,9 +37,15 @@ export const run = async (program: Program) => {
                 console.log();
                 break;
 
-            case 'macro':
-                node.runner(program, node);
+            case 'macro': {
+                const result = node.runner(program, node);
+
+                if (result) {
+                    typeof result == 'string' ? console.log(result) : result();
+                }
+
                 break;
+            }
         }
     }
 };
