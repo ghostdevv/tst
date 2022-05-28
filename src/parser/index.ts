@@ -60,6 +60,10 @@ export class Program {
             throw em.fatal('ParseError', 'Unable to find a name');
         }
 
+        if (name.includes(' ')) {
+            throw em.fatal('ParseError', `Variable name "${name}" must not contains spaces`);
+        }
+
         if (this.variables.has(name) || this.functions.has(name)) {
             throw em.fatal('Error', `Variable or function "${name}" already exists`);
         }
