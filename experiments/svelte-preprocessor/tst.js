@@ -4,8 +4,6 @@ import { compile } from '../../dist/compilers/javascript/compile.js';
 export const tst = {
     script: async ({ attributes, content }) => {
         if (attributes.lang == 'tst') {
-            attributes.lang = null;
-
             return {
                 code: await compile(content),
             };
