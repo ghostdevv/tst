@@ -70,12 +70,14 @@ const compileProgram = async (program: Program) => {
         });
     }
 
-    const result: string[] = [];
+    const result = lines.flatMap((line) => {
+        const result = [];
 
-    for (const line of lines) {
         result.push(`// [${line.type}] "${line.source}"`);
         result.push(`${line.line}\n`);
-    }
+
+        return result;
+    });
 
     return {
         code: result.join('\n'),
