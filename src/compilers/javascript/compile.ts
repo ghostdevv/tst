@@ -99,7 +99,7 @@ const patchProgram = (program: Program) => {
     return program;
 };
 
-export const compile = async (raw: string, outputPath: string) => {
+export const compile = async (raw: string, outputPath?: string) => {
     const program = patchProgram(new Program());
 
     program.add(raw);
@@ -107,12 +107,16 @@ export const compile = async (raw: string, outputPath: string) => {
     const { code } = await compileProgram(program);
     const lib = await generateLib();
 
-    const outputFileName = stripExt(basename(outputPath));
-    const libFileName = `${outputFileName}.lib.js`;
+    if (outputPath) {
+        const outputFileName = stripExt(basename(outputPath));
+        const libFileName = `${outputFileName}.lib.js`;
 
-    const libPath = join(dirname(outputPath), libFileName);
-    const libImport = `import { $$eval } from './${escape(libFileName)}';`;
+        const libPath = join(dirname(outputPath), libFileName);
+        const libImport = `import { $$eval } from './${escape(libFileName)}';`;
 
-    writeFileSync(outputPath, `${libImport}\n\n${code}`, 'utf-8');
-    writeFileSync(libPath, lib, 'utf-8');
+        writeFileSync(outputPath, `${libImport}\n\n${code}`, 'utf-8');
+        writeFileSync(libPath, lib, 'utf-8');
+    } else {
+        return `${code};;\n\n<!-- LIB -->\n\n${lib}`;
+    }
 };
