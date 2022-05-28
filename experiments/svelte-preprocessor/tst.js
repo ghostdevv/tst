@@ -1,7 +1,7 @@
 import { compile } from '../../dist/compilers/javascript/compile.js';
 
 /** @type {import("svelte-preprocess/dist/types").PreprocessorGroup} */
-const runner = {
+export const tst = {
     script: async ({ attributes, content }) => {
         if (attributes.lang == 'tst') {
             attributes.lang = null;
@@ -16,5 +16,3 @@ const runner = {
         };
     },
 };
-
-export const tst = () => runner;

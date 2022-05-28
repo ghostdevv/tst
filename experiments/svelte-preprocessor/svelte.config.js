@@ -3,7 +3,7 @@ import preprocess from 'svelte-preprocess';
 import { tst } from './tst.js';
 
 const config = {
-    preprocess: [tst()],
+    preprocess: [tst],
 
     kit: {
         adapter: adapter(),
