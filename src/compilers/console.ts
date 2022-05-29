@@ -1,5 +1,5 @@
 import { matchFunction, matchMaths, matchVariable } from '../parser/expressions/matcher';
-import { Functions, Variables } from '../parser/types';
+import { Functions, Leaf, Variables } from '../parser/types';
 import maths from 'math-expression-evaluator';
 import type { Program } from '../parser';
 
@@ -26,26 +26,30 @@ const evaluate = (line: string, variables: Variables, functions: Functions) => {
     return line;
 };
 
-export const run = async (program: Program) => {
-    for (const node of program.tree) {
-        switch (node.type) {
-            case 'line':
-                console.log(evaluate(node.raw, program.variables, program.functions));
-                break;
+export const runNode = (program: Program, node: Leaf) => {
+    switch (node.type) {
+        case 'line':
+            console.log(evaluate(node.raw, program.variables, program.functions));
+            break;
 
-            case 'blank':
-                console.log();
-                break;
+        case 'blank':
+            console.log();
+            break;
 
-            case 'macro': {
-                const result = node.runner(program, node);
+        case 'macro': {
+            const result = node.runner(program, node);
 
-                if (result) {
-                    typeof result == 'string' ? console.log(result) : result();
-                }
-
-                break;
+            if (result) {
+                typeof result == 'string' ? console.log(result) : result();
             }
+
+            break;
         }
+    }
+};
+
+export const run = (program: Program) => {
+    for (const node of program.tree) {
+        runNode(program, node);
     }
 };

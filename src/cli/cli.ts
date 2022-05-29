@@ -4,6 +4,7 @@ import { Program } from '../parser/index';
 import { readFileSync } from 'fs';
 import minimist from 'minimist';
 import { resolve } from 'path';
+import { repl } from './repl';
 import kleur from 'kleur';
 
 const args = minimist(process.argv.slice(2));
@@ -72,6 +73,11 @@ switch (command) {
         program.add(data);
 
         console.log(program);
+        break;
+    }
+
+    case 'repl': {
+        repl();
         break;
     }
 }
