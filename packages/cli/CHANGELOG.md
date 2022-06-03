@@ -1,5 +1,14 @@
 # @tstlang/cli
 
+## 0.0.3
+
+### Patch Changes
+
+-   Updated dependencies [[`5c8f02e`](https://github.com/ghostdevv/tst/commit/5c8f02ebac7d655ab771d1bf19f995c26cb9f29f)]:
+    -   @tstlang/parser@0.0.2
+    -   @tstlang/compiler-console@0.0.2
+    -   @tstlang/compiler-javascript@0.0.3
+
 ## 0.0.2
 
 ### Patch Changes
