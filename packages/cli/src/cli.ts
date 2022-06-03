@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import * as javascriptCompiler from '@tstlang/compiler-javascript';
 import * as consoleCompiler from '@tstlang/compiler-console';
 import { Program } from '@tstlang/parser';
