@@ -1,6 +1,7 @@
 {
 	"name": "@tstlang/monorepo",
 	"private": true,
+	"type": "module",
 	"scripts": {
 		"dev": "pnpm --parallel -r build --watch",
 		"build": "pnpm -r build",
