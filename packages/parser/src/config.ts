@@ -4,3 +4,7 @@ export const macros: Record<string, MacroRunner> = {
     clear: () => () => console.clear(),
     quit: () => () => process.exit(0),
 };
+
+export const reservedVariableNames = new Set([
+    '$'
+])
