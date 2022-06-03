@@ -15,5 +15,13 @@
 		"pnpm": "^7.0.0",
 		"npm": "forbidden, use pnpm",
 		"node": ">= 16"
+	},
+	"homepage": "https://github.com/ghostdevv/tst",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/ghostdevv/tst"
+	},
+	"bugs": {
+		"url": "https://github.com/ghostdevv/tst"
 	}
 }
