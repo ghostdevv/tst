@@ -1,11 +1,10 @@
-import { nodeResolve } from '@rollup/plugin-node-resolve';
+import urlResolve from 'rollup-plugin-url-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import virtual from '@rollup/plugin-virtual';
 import { rollup } from 'rollup';
-import { join } from 'desm';
 
 const lib = `
-import maths from 'math-expression-evaluator';
+import maths from 'https://cdn.skypack.dev/math-expression-evaluator?min';
 
 export function _tst_math_(str) {
     return maths.eval(str);
@@ -17,8 +16,11 @@ export const generateLib = async () => {
         input: 'entry',
         plugins: [
             virtual({ entry: lib }),
-            commonjs(),
-            nodeResolve({ moduleDirectories: [join(import.meta.url, '../node_modules')] }),
+            urlResolve(),
+            commonjs({
+                // Use commonjs with skypack
+                include: /^https:\/\/cdn.skypack\.dev/,
+            }),
         ],
     });
 
