@@ -15,10 +15,5 @@
 		"pnpm": "^7.0.0",
 		"npm": "forbidden, use pnpm",
 		"node": ">= 16"
-	},
-	"pnpm": {
-		"overrides": {
-			"neru": "workspace:*"
-		}
 	}
 }
