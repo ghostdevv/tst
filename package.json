@@ -3,6 +3,22 @@
 	"private": true,
 	"scripts": {
 		"dev": "pnpm --parallel -r build --watch",
-		"build": "pnpm -r build"
+		"build": "pnpm -r build",
+		"release": "changeset publish"
+	},
+	"devDependencies": {
+		"@changesets/cli": "^2.22.0",
+		"@svitejs/changesets-changelog-github-compact": "^0.1.1"
+	},
+	"packageManager": "pnpm@7.0.0",
+	"engines": {
+		"pnpm": "^7.0.0",
+		"npm": "forbidden, use pnpm",
+		"node": ">= 16"
+	},
+	"pnpm": {
+		"overrides": {
+			"neru": "workspace:*"
+		}
 	}
 }
