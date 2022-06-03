@@ -1,5 +1,11 @@
 # @tstlang/compiler-javascript
 
+## 0.0.2
+
+### Patch Changes
+
+-   use skypack and url resolve plugin instead of node resolve plugin to fix weirdness ([`583c4de`](https://github.com/ghostdevv/tst/commit/583c4de2d468c929d5d7d9dafa8eef2064568d0e))
+
 ## 0.0.1
 
 ### Patch Changes
