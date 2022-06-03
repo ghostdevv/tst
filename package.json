@@ -5,7 +5,8 @@
 	"scripts": {
 		"dev": "pnpm --parallel -r build --watch",
 		"build": "pnpm -r build",
-		"release": "changeset publish"
+		"release": "changeset publish",
+		"cli": "node ./packages/cli/dist/cli.js"
 	},
 	"devDependencies": {
 		"@changesets/cli": "^2.22.0",
