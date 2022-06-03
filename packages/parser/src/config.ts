@@ -1,4 +1,4 @@
-import type { MacroRunner } from './parser/types';
+import type { MacroRunner } from './types';
 
 export const macros: Record<string, MacroRunner> = {
     clear: () => () => console.clear(),

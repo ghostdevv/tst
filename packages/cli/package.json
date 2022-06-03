@@ -1,0 +1,25 @@
+{
+	"name": "@tstlang/cli",
+	"version": "0.0.0",
+	"type": "module",
+	"bin": {
+		"tst": "./dist/cli.js"
+	},
+	"scripts": {
+		"build": "tsup-node src"
+	},
+	"dependencies": {
+		"kleur": "^4.1.4",
+		"minimist": "^1.2.6",
+		"@tstlang/parser": "workspace:*",
+		"@tstlang/compiler-console": "workspace:*",
+		"@tstlang/compiler-javascript": "workspace:*"
+	},
+	"devDependencies": {
+		"@types/node": "^17.0.35",
+		"nodemon": "^2.0.16",
+		"tsm": "^2.2.1",
+		"tsup": "^6.0.1",
+		"typescript": "^4.7.2"
+	}
+}

@@ -1,7 +1,6 @@
-import { matchFunction, matchMaths, matchVariable } from '../../parser/expressions/matcher';
+import { matchFunction, matchMaths, matchVariable } from '@tstlang/parser';
+import { Program, type Leaf } from '@tstlang/parser';
 import { basename, dirname, join } from 'path';
-import { Program } from '../../parser/index';
-import { Leaf } from '../../parser/types';
 import { stripExt } from 'ghoststools';
 import { generateLib } from './lib';
 import { writeFileSync } from 'fs';

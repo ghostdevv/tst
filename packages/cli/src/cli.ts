@@ -1,6 +1,6 @@
-import * as javascriptCompiler from '../compilers/javascript/compile';
-import * as consoleCompiler from '../compilers/console';
-import { Program } from '../parser/index';
+import * as javascriptCompiler from '@tstlang/compiler-javascript';
+import * as consoleCompiler from '@tstlang/compiler-console';
+import { Program } from '@tstlang/parser';
 import { readFileSync } from 'fs';
 import minimist from 'minimist';
 import { resolve } from 'path';
@@ -78,6 +78,11 @@ switch (command) {
 
     case 'repl': {
         repl();
+        break;
+    }
+
+    default: {
+        throw new Error(`Command ${command} not found`);
         break;
     }
 }

@@ -1,7 +1,7 @@
 import { FunctionNode, Functions, Leaf, MacroRunner, UnparsedNode, Variables } from './types';
 import { validateFunctionExpression, validateLine } from './validator';
 import { createErrorManager } from './errors';
-import * as config from '../config';
+import * as config from './config';
 import { nanoid } from 'nanoid';
 
 export class Program {

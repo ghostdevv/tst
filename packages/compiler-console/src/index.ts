@@ -1,7 +1,7 @@
-import { matchFunction, matchMaths, matchVariable } from '../parser/expressions/matcher';
-import { Functions, Leaf, Variables } from '../parser/types';
+import { matchFunction, matchMaths, matchVariable } from '@tstlang/parser';
+import { Functions, Leaf, Variables } from '@tstlang/parser';
+import type { Program } from '@tstlang/parser';
 import maths from 'math-expression-evaluator';
-import type { Program } from '../parser';
 
 const evaluate = (line: string, variables: Variables, functions: Functions) => {
     line = matchVariable(line, (variable) => {

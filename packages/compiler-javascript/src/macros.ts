@@ -1,5 +1,5 @@
-import { createErrorManager } from '../../parser/errors';
-import type { MacroRunner } from '../../parser/types';
+import { createErrorManager } from '@tstlang/parser';
+import type { MacroRunner } from '@tstlang/parser';
 
 const em = createErrorManager();
 

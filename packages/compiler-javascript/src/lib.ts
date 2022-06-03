@@ -2,6 +2,7 @@ import { nodeResolve } from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import virtual from '@rollup/plugin-virtual';
 import { rollup } from 'rollup';
+import { join } from 'desm';
 
 const lib = `
 import maths from 'math-expression-evaluator';
@@ -14,7 +15,11 @@ export function _tst_math_(str) {
 export const generateLib = async () => {
     const rollupInstance = await rollup({
         input: 'entry',
-        plugins: [virtual({ entry: lib }), commonjs(), nodeResolve()],
+        plugins: [
+            virtual({ entry: lib }),
+            commonjs(),
+            nodeResolve({ moduleDirectories: [join(import.meta.url, '../node_modules')] }),
+        ],
     });
 
     const { output } = await rollupInstance.generate({
